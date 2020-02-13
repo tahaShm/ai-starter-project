@@ -1,5 +1,9 @@
+# ~/.local/bin/jupyter-notebook
+
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+
 def printDataFrameInfo(df) : 
     print("\n\nhead: first 5 rows\n")
     print(df.head())
@@ -16,16 +20,19 @@ def showNanInColumns(df) :
     print(countNan)
 
 def changeNanWithAverage(df) : 
-    theMean = df.mean(axis=1)
     for i, col in enumerate(df):
         if (col != "Chance of Admit") :
-            df.iloc[:, i] = df.iloc[:, i].fillna(theMean)
+            df.iloc[:, i] = df.iloc[:, i].fillna(df[col].mean()) # cast to same dtype remains
     # showNanInColumns(df)
     return df
             
 inp = pd.read_csv('AdmissionPredict.csv')
 df = pd.DataFrame(inp)
-printDataFrameInfo(df) #p1
+# printDataFrameInfo(df) #p1
 # showNanInColumns(df) #p2
 df = changeNanWithAverage(df) #p3
 printDataFrameInfo(df) #p1
+
+
+#-------------------------------------------------------------part2
+
